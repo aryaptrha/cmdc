@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALIZA — a recorded conversation experiment</title>
+    <meta
+      name="description"
+      content="A deterministic reconstruction of the 1966 ELIZA script. The mechanism stays visible."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./aliza.css" />
+  </head>
+  <body>
+    <!-- Desktop gate. CSS-only, so it holds even if scripting fails. -->
+    <div class="gate">
+      <p class="gate__line">This experience is designed for desktop.</p>
+      <p class="gate__line">Please open it on a larger screen.</p>
+      <p class="gate__meta">Minimum width 1024px</p>
+    </div>
+
+    <div class="workspace">
+      <a class="backlink" href="/aliza">
+        <span aria-hidden="true">←</span> ALIZA, in the catalogue
+      </a>
+
+      <header class="tech">
+        <p class="tech__title">ALIZA / machine conversation instrument</p>
+        <dl class="tech__grid" id="tech"></dl>
+        <p class="tech__note">
+          Nothing you type leaves this page. There is no model and no network
+          call: only a keyword table and a substitution list.
+        </p>
+      </header>
+
+      <main class="shell">
+        <div class="editorial">
+          <section class="block" data-reveal>
+            <p class="index"><span class="index__n">01</span> / Context</p>
+            <h2>It never understood anything.</h2>
+            <p>
+              The 1966 script scanned a sentence for keywords, took the
+              strongest match, and returned the remainder as a question with the
+              pronouns reversed. That is the entire mechanism. There is no
+              model, no memory worth the name, and no representation of meaning.
+            </p>
+            <p>
+              It is reproduced here rather than explained, because the
+              reproduction is the argument. Every reply you receive below comes
+              from a rule you can read in the next section.
+            </p>
+          </section>
+
+          <section class="block" data-reveal>
+            <p class="index"><span class="index__n">02</span> / The script</p>
+            <h2>Five steps, in order.</h2>
+            <ol class="steps">
+              <li>Tokenise the input on whitespace and punctuation.</li>
+              <li>
+                Rank every keyword found. Highest rank wins; ties go to the
+                keyword that appears earliest.
+              </li>
+              <li>
+                Take the words after that keyword and reverse the pronouns so
+                the sentence returns to you.
+              </li>
+              <li>Emit the next response in that keyword's list.</li>
+              <li>
+                When nothing matches at all, rotate through a short list of
+                generic prompts.
+              </li>
+            </ol>
+            <p class="meta" id="rules-meta"></p>
+          </section>
+
+          <section class="block" data-reveal>
+            <p class="index"><span class="index__n">03</span> / After</p>
+            <h2>Where it breaks.</h2>
+            <p>
+              Try a sentence with no keyword. Try a subordinate clause. Try the
+              same sentence twice and watch it cycle. The failures are the
+              clearest evidence that nothing is understood — the machine is
+              reflecting your own words back at you and nothing more.
+            </p>
+          </section>
+        </div>
+
+        <aside class="console" data-reveal>
+          <div class="console__head">
+            <p class="console__label">Machine</p>
+            <div class="persona" role="group" aria-label="Select machine">
+              <button type="button" class="persona__btn is-active" data-persona="eliza">
+                Original ELIZA
+              </button>
+              <button type="button" class="persona__btn" data-persona="poet">
+                The Poet
+              </button>
+            </div>
+            <p class="console__note" id="persona-note"></p>
+          </div>
+
+          <div class="transcript" id="transcript" aria-live="polite"></div>
+
+          <form class="compose" id="compose" autocomplete="off">
+            <label class="compose__label" for="input">You</label>
+            <div class="compose__row">
+              <input
+                class="compose__input"
+                id="input"
+                name="input"
+                type="text"
+                placeholder="Type a sentence"
+                spellcheck="false"
+                autocomplete="off"
+              />
+              <button class="compose__send" type="submit">Send</button>
+            </div>
+          </form>
+
+          <dl class="console__stats" id="stats"></dl>
+        </aside>
+      </main>
+
+      <footer class="foot">
+        <p>
+          Script, rules and transcripts written for this demonstration. No real
+          conversations are reproduced.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/vendor/gsap/gsap.min.js"></script>
+    <script src="/vendor/gsap/ScrollTrigger.min.js"></script>
+    <script src="./aliza.js"></script>
+  </body>
+</html>

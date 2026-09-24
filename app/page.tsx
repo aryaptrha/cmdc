@@ -1,69 +1,132 @@
-import Image from "next/image";
+import { ExperimentRow } from "./_components/experiment-row";
+import { Masthead } from "./_components/masthead";
+import { MetadataStrip } from "./_components/metadata-strip";
+import { Reveal } from "./_components/reveal";
+import { SectionIndex } from "./_components/section-index";
+import { SplitDisplay } from "./_components/split-display";
+import { colophon, experiments } from "@/lib/experiments";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <div className="container">
+        <Masthead />
+      </div>
+
+      <main>
+        <section className="container section">
+          <div className="stack stack--6">
+            <SplitDisplay
+              as="h1"
+              className="display"
+              text={"The portfolio is the catalogue.\nEach experiment is its own artwork."}
+            />
+            <Reveal immediate delay={0.35}>
+              <p className="prose">
+                Two experiments made with machines. Neither is fully automated
+                and neither is fully handmade — the part worth looking at is
+                always the seam between the two.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="container section">
+          <div className="split">
+            <div>
+              <SectionIndex number="01" label="What this is" />
+            </div>
+            <Reveal className="stack stack--6">
+              <h2 className="title">A catalogue, not a portfolio.</h2>
+              <div className="prose">
+                <p>
+                  Most portfolios compress work into a card, a thumbnail and a
+                  list of technologies. This one does the opposite. Every entry
+                  keeps its own typeface, its own palette and its own way of
+                  being used, and the shell stays quiet enough to let that
+                  happen.
+                </p>
+                <p>
+                  Provenance is not an appendix here. Dates, source material,
+                  measurements, machine decisions and the things that went wrong
+                  are part of the experience rather than documentation of it.
+                </p>
+                <p>
+                  Where a machine made a choice, you can inspect the choice.
+                  Where the work failed, the failure is still on the page.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="container section">
+          <div className="split">
+            <div>
+              <SectionIndex number="02" label="The experiments" />
+            </div>
+            <Reveal className="stack stack--4">
+              <h2 className="title">Two exhibits.</h2>
+              <p className="prose">
+                Each opens into its own interface, and each has a page
+                explaining how it was made and where it broke.
+              </p>
+            </Reveal>
+          </div>
+
+          <div>
+            {experiments.map((experiment) => (
+              <ExperimentRow key={experiment.slug} experiment={experiment} />
+            ))}
+          </div>
+        </section>
+
+        <section className="container section" id="about">
+          <div className="stack stack--8">
+            <div className="split">
+              <div>
+                <SectionIndex number="03" label="About" />
+              </div>
+              <Reveal className="prose">
+                <p>
+                  The Robot and Me is a record of work made with machines — not
+                  generated wholesale, and not untouched by hand. The interesting
+                  part is always the seam: what the machine decided, what the
+                  person did about it, and what neither of them expected.
+                </p>
+                <p>
+                  Two experiments are published here. Both are desktop
+                  experiences, both keep their own design language, and neither
+                  is a demonstration of a technology.
+                </p>
+                <p>
+                  This build is itself a demonstration. The exhibits, the
+                  recorded conversations and the process data are written to
+                  exercise the design system, and no real recordings are
+                  reproduced.
+                </p>
+              </Reveal>
+            </div>
+
+            <Reveal className="colophon">
+              <p className="eyebrow">Colophon</p>
+              <MetadataStrip pairs={colophon} />
+            </Reveal>
+          </div>
+        </section>
+      </main>
+
+      <footer className="container section--tight">
+        <hr className="hairline" />
+        <div
+          className="stack"
+          style={{ paddingBlock: "var(--space-3)" }}
+        >
+          <p className="metadata">
+            The Robot and Me — demonstration build, 2024
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </footer>
+    </>
   );
 }

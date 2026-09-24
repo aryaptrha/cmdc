@@ -1,26 +1,789 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   01. Design tokens — DESIGN.md §02, §03, §04, §12
+   These are the guide's values, reproduced verbatim. Everything else
+   in this file is composed from them.
+------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-ultramarine: #2b2bce;
+  --surface-paper: #f2ede2;
+  --text-ink: #111111;
+  --text-muted: #666666;
+  --hairline: rgba(17, 17, 17, 0.16);
+
+  --font-sans: Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --display-weight: 300;
+  --body-weight: 400;
+
+  --body-size: 16px;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-12: 96px;
+  --space-16: 128px;
+
+  --page-max: 1440px;
+  --page-gutter: clamp(24px, 3vw, 48px);
+  --grid-gap: 24px;
+
+  --reading-measure: 68ch;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Bridge into Tailwind. Colours and fonts only — the guide's semantic
+   classes below carry spacing so there is no parallel spacing scale. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ultramarine: var(--brand-ultramarine);
+  --color-paper: var(--surface-paper);
+  --color-ink: var(--text-ink);
+  --color-muted: var(--text-muted);
+  --color-hairline: var(--hairline);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ------------------------------------------------------------------
+   02. Base
+   Fixed paper/ink system. Not theme-aware — no dark mode.
+------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--surface-paper);
+  color: var(--text-ink);
+  font-family: var(--font-sans);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  line-height: 1.55;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--brand-ultramarine);
+  color: var(--surface-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-ultramarine);
+  outline-offset: 3px;
+}
+
+img,
+svg,
+figure {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------
+   03. Layout primitives
+------------------------------------------------------------------- */
+.container {
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--page-max));
+  margin-inline: auto;
+}
+
+.reading {
+  max-width: var(--reading-measure);
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+/* Editorial two-column: narrow evidence column, wide statement column. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: var(--grid-gap);
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------
+   03b. Lenis — required styles for the smooth-scroll runtime
+------------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------
+   04. Typography — DESIGN.md §03
+   Weight 300 is display-only and reachable only through .display.
+------------------------------------------------------------------- */
+.display {
+  font-weight: var(--display-weight);
+  font-size: clamp(40px, 5.2vw, 78px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  max-width: 34ch;
+}
+
+.display--sm {
+  font-size: clamp(34px, 4.4vw, 64px);
+  line-height: 1.02;
+}
+
+.title {
+  font-weight: var(--body-weight);
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.subhead {
+  font-weight: var(--body-weight);
+  font-size: clamp(20px, 1.9vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.prose {
+  font-size: 18px;
+  line-height: 1.62;
+  max-width: var(--reading-measure);
+}
+
+.prose p + p {
+  margin-top: var(--space-3);
+}
+
+.metadata {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.accent {
+  color: var(--brand-ultramarine);
+}
+
+/* ------------------------------------------------------------------
+   05. Site masthead — DESIGN.md §05
+------------------------------------------------------------------- */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.masthead__wordmark,
+.masthead__link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+}
+
+.masthead__link:hover,
+.masthead__link:focus-visible {
+  color: var(--brand-ultramarine);
+}
+
+/* ------------------------------------------------------------------
+   06. Section index — numbers orient, they do not decorate
+------------------------------------------------------------------- */
+.section-index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-index__number {
+  color: var(--brand-ultramarine);
+}
+
+.section-index__label {
+  color: var(--text-ink);
+}
+
+.section {
+  padding-block: var(--space-12);
+}
+
+.section--tight {
+  padding-block: var(--space-8);
+}
+
+/* ------------------------------------------------------------------
+   07. Experiment row — an exhibit, not a project card
+------------------------------------------------------------------- */
+.experiment-row {
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--hairline);
+}
+
+.experiment-row__meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.experiment-row__index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-ultramarine);
+}
+
+.experiment-row__title {
+  font-weight: var(--display-weight);
+  font-size: clamp(32px, 4.2vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.experiment-row__premise {
+  font-size: 18px;
+  line-height: 1.58;
+  max-width: 46ch;
+}
+
+.experiment-row__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* ------------------------------------------------------------------
+   08. Metadata strip — visually quieter than the title
+------------------------------------------------------------------- */
+.metadata-strip {
+  display: grid;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.metadata-strip__row {
+  display: grid;
+  grid-template-columns: 15ch minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.metadata-strip__label {
+  color: var(--text-muted);
+}
+
+.metadata-strip__value {
+  color: var(--text-ink);
+}
+
+/* ------------------------------------------------------------------
+   09. Text CTA — descriptive, never a button
+------------------------------------------------------------------- */
+.text-cta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5ch;
+  font-size: 16px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 2px;
+  transition: color 180ms var(--ease-editorial),
+    border-color 180ms var(--ease-editorial);
+}
+
+.text-cta:hover,
+.text-cta:focus-visible {
+  color: var(--brand-ultramarine);
+  border-color: var(--brand-ultramarine);
+}
+
+.text-cta__arrow {
+  transition: transform 220ms var(--ease-editorial);
+}
+
+.text-cta:hover .text-cta__arrow,
+.text-cta:focus-visible .text-cta__arrow {
+  transform: translateX(4px);
+}
+
+.text-cta--static:hover .text-cta__arrow {
+  transform: none;
+}
+
+/* ------------------------------------------------------------------
+   10. Figure — figures are evidence
+------------------------------------------------------------------- */
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.figure__plate {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: #e6dfd1;
+  overflow: hidden;
+}
+
+.figure__caption {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.figure__caption strong {
+  font-weight: 400;
+  color: var(--text-ink);
+}
+
+/* Paper grain, generated — no image assets. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+/* Registration / crop marks, generated from gradients. */
+.crop-marks {
+  --mk: 1px;
+  --ml: 14px;
+  --mi: 10px;
+  background-image: linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: var(--ml) var(--mk), var(--mk) var(--ml), var(--ml) var(--mk),
+    var(--mk) var(--ml), var(--ml) var(--mk), var(--mk) var(--ml),
+    var(--ml) var(--mk), var(--mk) var(--ml);
+  background-position: left var(--mi) top var(--mi), left var(--mi) top var(--mi),
+    right var(--mi) top var(--mi), right var(--mi) top var(--mi),
+    left var(--mi) bottom var(--mi), left var(--mi) bottom var(--mi),
+    right var(--mi) bottom var(--mi), right var(--mi) bottom var(--mi);
+}
+
+/* Ultramarine duotone treatment for generated plates. */
+.duotone {
+  background-color: var(--brand-ultramarine);
+}
+
+/* ------------------------------------------------------------------
+   11. Experiment scopes — global system provides structure,
+   the experiment provides identity (DESIGN.md §07, §12).
+------------------------------------------------------------------- */
+.experiment {
+  --experiment-bg: var(--surface-paper);
+  --experiment-fg: var(--text-ink);
+  --experiment-accent: var(--brand-ultramarine);
+
+  --experiment-display-font: var(--font-sans);
+  --experiment-body-font: var(--font-sans);
+  --experiment-mono-font: var(--font-mono);
+
+  --experiment-border: currentColor;
+  --experiment-surface: var(--surface-paper);
+
+  --experiment-motion: 250ms;
+  --experiment-canvas-ratio: 16 / 9;
+
+  background: var(--experiment-bg);
+  color: var(--experiment-fg);
+  font-family: var(--experiment-body-font);
+}
+
+.experiment .display,
+.experiment .title,
+.experiment .experiment-row__title {
+  font-family: var(--experiment-display-font);
+}
+
+/* Be My Hands — documentary, physical, measurable. */
+.experiment--be-my-hands {
+  --experiment-accent: var(--brand-ultramarine);
+}
+
+/* ALIZA — local identity overrides the global tokens. */
+.experiment--aliza {
+  --experiment-display-font: var(--font-mono-aliza);
+  --experiment-body-font: var(--font-serif-aliza);
+  --experiment-mono-font: var(--font-mono-aliza);
+  --experiment-bg: var(--surface-paper);
+}
+
+.experiment--aliza .metadata,
+.experiment--aliza .eyebrow,
+.experiment--aliza .section-index,
+.experiment--aliza .metadata-strip {
+  font-family: var(--font-mono-aliza);
+}
+
+.experiment--aliza .prose {
+  font-size: 19px;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+/* Mono is far wider than the grotesque; headings need to come down a step so
+   the measure stays comfortable. */
+.experiment--aliza .title {
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.15;
+}
+
+.experiment--aliza .display {
+  font-size: clamp(48px, 7vw, 104px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: none;
+}
+
+/* ------------------------------------------------------------------
+   12. Boundary notice — crossing from portfolio into experiment
+------------------------------------------------------------------- */
+.boundary {
+  border: 1px solid var(--brand-ultramarine);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--brand-ultramarine);
+}
+
+/* ------------------------------------------------------------------
+   13. Editorial lists (process chains, logs, records)
+------------------------------------------------------------------- */
+.record {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.record__row {
+  display: grid;
+  grid-template-columns: 12ch minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-top: 1px solid var(--hairline);
+}
+
+.record__speaker {
+  color: var(--text-muted);
+}
+
+.record__row--machine .record__speaker {
+  color: var(--brand-ultramarine);
+}
+
+.chain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.chain__step {
+  color: var(--text-muted);
+}
+
+.chain__step--active {
+  color: var(--brand-ultramarine);
+}
+
+/* ------------------------------------------------------------------
+   14. Callout / question blocks
+------------------------------------------------------------------- */
+.notes {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.note__index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--brand-ultramarine);
+  letter-spacing: 0.08em;
+}
+
+.note__body {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 58ch;
+}
+
+/* ------------------------------------------------------------------
+   14b. Layout helpers used by the page templates
+------------------------------------------------------------------- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stack--2 {
+  gap: var(--space-2);
+}
+
+.stack--4 {
+  gap: var(--space-4);
+}
+
+.stack--6 {
+  gap: var(--space-6);
+}
+
+.stack--8 {
+  gap: var(--space-8);
+}
+
+.colophon {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: var(--grid-gap);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  align-items: start;
+}
+
+.experiment-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-block: var(--space-12) var(--space-8);
+}
+
+.experiment-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (max-width: 900px) {
+  .colophon,
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------------
+   14c. Generated figure plates — evidence without image assets
+------------------------------------------------------------------- */
+.plate {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #e6dfd1;
+  color: rgba(17, 17, 17, 0.42);
+}
+
+.plate--paper {
+  background-color: #e6dfd1;
+  color: rgba(17, 17, 17, 0.42);
+}
+
+.plate--ultramarine {
+  background-color: var(--brand-ultramarine);
+  color: rgba(242, 237, 226, 0.5);
+}
+
+.plate--ink {
+  background-color: var(--text-ink);
+  color: rgba(242, 237, 226, 0.4);
+}
+
+.plate__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image: repeating-linear-gradient(
+      to right,
+      currentColor 0 1px,
+      transparent 1px 24px
+    ),
+    repeating-linear-gradient(to bottom, currentColor 0 1px, transparent 1px 24px);
+}
+
+.plate__shape {
+  position: absolute;
+  background: currentColor;
+}
+
+.plate__cut {
+  position: absolute;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.9;
+}
+
+.plate__label,
+.plate__mark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plate__label {
+  left: 12px;
+  bottom: 10px;
+}
+
+.plate__mark {
+  top: 10px;
+  right: 12px;
+}
+
+/* ------------------------------------------------------------------
+   14d. Word-level split for display reveals
+------------------------------------------------------------------- */
+.split-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ------------------------------------------------------------------
+   14e. Failure / exception log — failure as evidence
+------------------------------------------------------------------- */
+.log {
+  border-top: 1px solid var(--hairline);
+}
+
+.log__row {
+  display: grid;
+  grid-template-columns: 10ch 14ch minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.log__status {
+  color: var(--brand-ultramarine);
+}
+
+@media (max-width: 760px) {
+  .log__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}
+
+/* ------------------------------------------------------------------
+   15. Motion guards
+   Reduced motion renders final state immediately, no scroll dependency.
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Elements the motion layer animates start hidden only when JS is running,
+   so a no-JS visitor and a reduced-motion visitor both see everything. */
+.js [data-motion="pending"] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-motion="pending"] {
+    opacity: 1;
+  }
 }

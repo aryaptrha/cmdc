@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Be My Hands — instruction record</title>
+    <meta
+      name="description"
+      content="A machine selects and places fragments of 16mm film. A person cuts and glues them. The record is auditable."
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Desktop gate. CSS-only, so it holds even if scripting fails. -->
+    <div class="gate">
+      <p class="gate__line">This experience is designed for desktop.</p>
+      <p class="gate__line">Please open it on a larger screen.</p>
+      <p class="gate__meta">Minimum width 1024px</p>
+    </div>
+
+    <div class="workspace">
+      <a class="backlink" href="/be-my-hands">
+        <span aria-hidden="true">←</span> Be My Hands, in the catalogue
+      </a>
+
+      <header class="tech">
+        <p class="tech__title">BE MY HANDS / instruction record, sheet 02</p>
+        <dl class="tech__grid">
+          <div class="tech__pair">
+            <dt class="tech__k">Sheet</dt>
+            <dd class="tech__v">02 of 04 · 210 × 297 mm</dd>
+          </div>
+          <div class="tech__pair">
+            <dt class="tech__k">Stock</dt>
+            <dd class="tech__v">16mm educational film, 1961</dd>
+          </div>
+          <div class="tech__pair">
+            <dt class="tech__k">Fragments placed</dt>
+            <dd class="tech__v">148</dd>
+          </div>
+          <div class="tech__pair">
+            <dt class="tech__k">Failed</dt>
+            <dd class="tech__v">22</dd>
+          </div>
+          <div class="tech__pair">
+            <dt class="tech__k">Sessions</dt>
+            <dd class="tech__v">9</dd>
+          </div>
+          <div class="tech__pair">
+            <dt class="tech__k">Machine</dt>
+            <dd class="tech__v">Frame selector v0.4</dd>
+          </div>
+        </dl>
+      </header>
+
+      <main class="shell">
+        <aside class="rail">
+          <p class="rail__label">Process</p>
+          <ol class="rail__list" id="rail"></ol>
+          <div class="rail__readout">
+            <p class="rail__key">Current step</p>
+            <p class="rail__value" id="rail-value">Film</p>
+          </div>
+        </aside>
+
+        <div class="stages">
+          <section class="stage" data-stage="0">
+            <p class="index"><span class="index__n">01</span> / Film</p>
+            <h2>Source material.</h2>
+            <p>
+              A 16mm educational film from 1961, eleven minutes and twenty
+              seconds long. Every frame is available to the selector; none of
+              them were chosen by a person.
+            </p>
+            <dl class="record">
+              <div class="record__row"><dt>Reel</dt><dd>3 of 5</dd></div>
+              <div class="record__row"><dt>Rate</dt><dd>24 fps</dd></div>
+              <div class="record__row"><dt>Frames</dt><dd>16,320</dd></div>
+              <div class="record__row"><dt>Scan</dt><dd>2K, flat, no grading</dd></div>
+            </dl>
+          </section>
+
+          <section class="stage" data-stage="1">
+            <p class="index"><span class="index__n">02</span> / Machine selection</p>
+            <h2>Choosing a frame.</h2>
+            <p>
+              Each frame is scored on contrast and edge density, then ranked.
+              The score is a measure of how much is happening in the image, not
+              how good it looks.
+            </p>
+            <dl class="record">
+              <div class="record__row"><dt>Scored</dt><dd>16,320 frames</dd></div>
+              <div class="record__row"><dt>Threshold</dt><dd>0.62</dd></div>
+              <div class="record__row"><dt>Selected</dt><dd>148</dd></div>
+            </dl>
+          </section>
+
+          <section class="stage" data-stage="2">
+            <p class="index"><span class="index__n">03</span> / Fragment selection</p>
+            <h2>Cutting a rectangle out of the frame.</h2>
+            <p>
+              The densest region of the winning frame is measured and a
+              rectangle is drawn inside it. That rectangle is the fragment. No
+              person has seen the frame it came from.
+            </p>
+            <dl class="record">
+              <div class="record__row"><dt>Fragment</dt><dd>F-019</dd></div>
+              <div class="record__row"><dt>Source frame</dt><dd>0412</dd></div>
+              <div class="record__row"><dt>Size</dt><dd>82 × 61 mm at print scale</dd></div>
+            </dl>
+          </section>
+
+          <section class="stage" data-stage="3">
+            <p class="index"><span class="index__n">04</span> / Physical cutting</p>
+            <h2>Where the machine stops.</h2>
+            <p>
+              A steel rule and a cutting mat. The fragment is printed to scale,
+              placed under the rule, and cut in two passes. This is the first
+              point at which the plan can fail.
+            </p>
+            <dl class="record">
+              <div class="record__row"><dt>Blade</dt><dd>30°, fresh</dd></div>
+              <div class="record__row"><dt>Passes</dt><dd>2</dd></div>
+              <div class="record__row"><dt>Tears</dt><dd>1 — fragment F-006</dd></div>
+            </dl>
+          </section>
+
+          <section class="stage" data-stage="4">
+            <p class="index"><span class="index__n">05</span> / Photographic feedback</p>
+            <h2>Closing the loop, or not.</h2>
+            <p>
+              The sheet is photographed flat after each session and filed
+              against the instruction that produced it. The machine is never
+              given the photograph — it is evidence for the record only.
+            </p>
+            <dl class="record">
+              <div class="record__row"><dt>Capture</dt><dd>Overhead, 1:1</dd></div>
+              <div class="record__row"><dt>Exposure</dt><dd>f/8, 1/125, diffused</dd></div>
+              <div class="record__row"><dt>Filed</dt><dd>Per session, 9 of 9</dd></div>
+            </dl>
+          </section>
+
+          <section class="stage" data-stage="5">
+            <p class="index"><span class="index__n">06</span> / Placement map</p>
+            <h2>The instruction, in millimetres.</h2>
+            <p>
+              Each fragment is given a position measured from the sheet origin,
+              plus a rotation. The map below fills as the stages pass — this is
+              what the machine expected the sheet to look like.
+            </p>
+            <div class="map">
+              <div class="map__sheet" id="map">
+                <span class="map__origin" aria-hidden="true"></span>
+              </div>
+              <p class="map__caption">
+                Figure 09 — Placement map, sheet 02. Coordinates in millimetres
+                from the top-left origin. Hatched fragments were skipped.
+              </p>
+            </div>
+            <dl class="record">
+              <div class="record__row"><dt>Position</dt><dd>214 / 138 mm</dd></div>
+              <div class="record__row"><dt>Rotation</dt><dd>41° from sheet edge</dd></div>
+              <div class="record__row"><dt>Overlap</dt><dd>0.0 mm</dd></div>
+            </dl>
+          </section>
+
+          <section class="stage" data-stage="6">
+            <p class="index"><span class="index__n">07</span> / Gluing</p>
+            <h2>The last irreversible step.</h2>
+            <p>
+              Archival PVA, weighted flat for twenty minutes, cured for a day.
+              Once a fragment is laid down it is not moved, including when it
+              lands badly.
+            </p>
+            <dl class="record">
+              <div class="record__row"><dt>Adhesive</dt><dd>Archival PVA</dd></div>
+              <div class="record__row"><dt>Weighted</dt><dd>20 minutes</dd></div>
+              <div class="record__row"><dt>Cured</dt><dd>24 hours, flat</dd></div>
+            </dl>
+          </section>
+        </div>
+      </main>
+
+      <section class="band" id="pair-band">
+        <p class="index"><span class="index__n">08</span> / The pair</p>
+        <h2 class="band__title">One sheet, two authors.</h2>
+        <div class="pair">
+          <figure class="plate">
+            <div class="plate__frame plate__frame--human" id="plate-human">
+              <span class="plate__label">Human-made artifact</span>
+              <span class="plate__mark">Sheet 02</span>
+            </div>
+            <figcaption>
+              Figure 10 — Physical sheet as photographed after session 9. The
+              tear at upper left is fragment F-006.
+            </figcaption>
+          </figure>
+          <figure class="plate">
+            <div class="plate__frame plate__frame--machine" id="plate-machine">
+              <span class="plate__label">Machine-directed counterpart</span>
+              <span class="plate__mark">Map 02</span>
+            </div>
+            <figcaption>
+              Figure 11 — Rendered from the placement map alone, with no
+              photographic feedback folded back in.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="band">
+        <p class="index"><span class="index__n">09</span> / Evidence</p>
+        <h2 class="band__title">The instruction, in full.</h2>
+        <dl class="record record--wide">
+          <div class="record__row"><dt>Timestamp</dt><dd>00:06:52:11</dd></div>
+          <div class="record__row"><dt>Frame</dt><dd>0412</dd></div>
+          <div class="record__row"><dt>Fragment</dt><dd>F-019</dd></div>
+          <div class="record__row"><dt>Position</dt><dd>214 / 138 mm</dd></div>
+          <div class="record__row"><dt>Decision</dt><dd>Place, no rotation</dd></div>
+          <div class="record__row"><dt>Action</dt><dd>Cut, glued 41° to edge</dd></div>
+        </dl>
+      </section>
+
+      <section class="band">
+        <p class="index"><span class="index__n">10</span> / Exceptions</p>
+        <h2 class="band__title">Twenty-two fragments failed.</h2>
+        <div class="log">
+          <div class="log__row">
+            <span class="log__ref">F-006</span>
+            <span class="log__status">Torn on cut</span>
+            <span class="log__note">Stock split along the perforation line. Placed anyway, rotated 6° to hide the tear.</span>
+          </div>
+          <div class="log__row">
+            <span class="log__ref">F-022</span>
+            <span class="log__status">Instruction unreadable</span>
+            <span class="log__note">Coordinate string truncated in the export. Operator placed from the preview. Divergence recorded.</span>
+          </div>
+          <div class="log__row">
+            <span class="log__ref">F-031</span>
+            <span class="log__status">Refused</span>
+            <span class="log__note">Required a 240 mm span; the sheet measures 210 mm. Skipped rather than scaled.</span>
+          </div>
+          <div class="log__row">
+            <span class="log__ref">F-048</span>
+            <span class="log__status">Delaminated</span>
+            <span class="log__note">Glue failed after two days. Photographed before and after; the lifting corner was left unlifted.</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <p>
+          Process data, plates and instructions written for this demonstration.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/vendor/gsap/gsap.min.js"></script>
+    <script src="/vendor/gsap/ScrollTrigger.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

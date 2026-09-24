@@ -1,0 +1,507 @@
+/* Be My Hands runtime — documentary treatment.
+   Physical, imperfect, measurable. Grain and crop marks are generated, not
+   photographed, so the runtime needs no image assets. */
+
+:root {
+  --paper: #f2ede2;
+  --ink: #111111;
+  --muted: #6b6459;
+  --ultra: #2b2bce;
+  --rule: rgba(17, 17, 17, 0.18);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: Helvetica, Arial, sans-serif;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--ultra);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ultra);
+  outline-offset: 2px;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 300;
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------- gate */
+.gate {
+  display: none;
+  padding: 64px 32px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.gate__meta {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1023px) {
+  .gate {
+    display: block;
+  }
+
+  .workspace {
+    display: none;
+  }
+}
+
+/* ----------------------------------------------------------- workspace */
+.workspace {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 0 clamp(24px, 3vw, 48px) 96px;
+}
+
+.backlink {
+  display: inline-block;
+  padding-block: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.backlink:hover,
+.backlink:focus-visible {
+  color: var(--ultra);
+}
+
+/* ----------------------------------------------------- technical header */
+.tech {
+  padding-block: 32px 24px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.tech__title {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ultra);
+}
+
+.tech__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin: 24px 0 0;
+}
+
+.tech__pair {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tech__k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tech__v {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+/* --------------------------------------------------------------- shell */
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+  padding-top: 64px;
+}
+
+/* ---------------------------------------------------------------- rail */
+.rail {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rail__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rail__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.rail__item {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr);
+  gap: 10px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  transition: color 160ms linear;
+}
+
+.rail__item.is-active {
+  color: var(--ultra);
+}
+
+.rail__readout {
+  padding-top: 8px;
+}
+
+.rail__key {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rail__value {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+/* --------------------------------------------------------------- stages */
+.stages {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 72ch;
+}
+
+.stage p {
+  font-size: 18px;
+  max-width: 62ch;
+}
+
+.index {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.index__n {
+  color: var(--ultra);
+}
+
+/* -------------------------------------------------------------- records */
+.record {
+  margin: 0;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.record__row {
+  display: grid;
+  grid-template-columns: 16ch minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.record__row dt {
+  color: var(--muted);
+}
+
+.record__row dd {
+  margin: 0;
+}
+
+.record--wide .record__row {
+  grid-template-columns: 18ch minmax(0, 1fr);
+}
+
+/* ----------------------------------------------------------- placement map */
+.map {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.map__sheet {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 210 / 297;
+  background-color: #e8e1d3;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  color: rgba(17, 17, 17, 0.22);
+  background-image: repeating-linear-gradient(
+      to right,
+      rgba(17, 17, 17, 0.09) 0 1px,
+      transparent 1px 24px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(17, 17, 17, 0.09) 0 1px,
+      transparent 1px 24px
+    );
+}
+
+.map__origin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-right: 1px solid var(--ultra);
+  border-bottom: 1px solid var(--ultra);
+}
+
+.map__frag {
+  position: absolute;
+  background-color: var(--ultra);
+  opacity: 0;
+}
+
+.map__frag--skipped {
+  background-color: transparent;
+  border: 1px dashed var(--muted);
+}
+
+.map__caption {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+/* ----------------------------------------------------------------- bands */
+.band {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 96px;
+}
+
+.band__title {
+  max-width: 22ch;
+}
+
+/* ----------------------------------------------------------------- pair */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.plate {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plate__frame {
+  position: relative;
+  /* True A4 proportion, as the sheet itself, but scaled so the plate and its
+     evidence caption can be read together. */
+  aspect-ratio: 210 / 297;
+  max-width: 430px;
+  overflow: hidden;
+}
+
+/* Crop marks, generated from gradients. */
+.plate__frame::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  color: rgba(242, 237, 226, 0.75);
+  background-image: linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 16px 1px, 1px 16px, 16px 1px, 1px 16px, 16px 1px, 1px 16px,
+    16px 1px, 1px 16px;
+  background-position: left top, left top, right top, right top, left bottom,
+    left bottom, right bottom, right bottom;
+  pointer-events: none;
+}
+
+/* Paper grain. */
+.plate__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.plate__frame--human {
+  background-color: var(--ultra);
+  background-image: linear-gradient(
+      rgba(242, 237, 226, 0.86),
+      rgba(242, 237, 226, 0.86)
+    ),
+    linear-gradient(rgba(242, 237, 226, 0.44), rgba(242, 237, 226, 0.44)),
+    linear-gradient(rgba(17, 17, 17, 0.42), rgba(17, 17, 17, 0.42)),
+    linear-gradient(rgba(242, 237, 226, 0.6), rgba(242, 237, 226, 0.6));
+  background-repeat: no-repeat;
+  background-size: 22% 34%, 28% 24%, 16% 40%, 20% 18%;
+  background-position: 9% 14%, 42% 26%, 68% 46%, 30% 64%;
+}
+
+.plate__frame--machine {
+  background-color: var(--ink);
+  background-image: repeating-linear-gradient(
+      to right,
+      rgba(242, 237, 226, 0.14) 0 1px,
+      transparent 1px 22px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(242, 237, 226, 0.14) 0 1px,
+      transparent 1px 22px
+    ),
+    linear-gradient(rgba(242, 237, 226, 0.8), rgba(242, 237, 226, 0.8)),
+    linear-gradient(rgba(242, 237, 226, 0.4), rgba(242, 237, 226, 0.4)),
+    linear-gradient(rgba(242, 237, 226, 0.55), rgba(242, 237, 226, 0.55));
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-size: auto, auto, 30% 40%, 24% 26%, 18% 34%;
+  background-position: 0 0, 0 0, 12% 16%, 52% 46%, 70% 70%;
+}
+
+.plate__label,
+.plate__mark {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plate__label {
+  left: 26px;
+  bottom: 26px;
+  color: var(--paper);
+}
+
+.plate__mark {
+  top: 26px;
+  right: 26px;
+  color: rgba(242, 237, 226, 0.8);
+}
+
+.plate figcaption {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+/* ------------------------------------------------------------------ log */
+.log {
+  border-top: 1px solid var(--rule);
+}
+
+.log__row {
+  display: grid;
+  grid-template-columns: 9ch 22ch minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 10px;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.log__ref {
+  color: var(--ultra);
+}
+
+.log__status {
+  color: var(--ink);
+}
+
+.log__note {
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------- footer */
+.foot {
+  margin-top: 96px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------- motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

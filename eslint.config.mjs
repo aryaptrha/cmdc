@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored third-party runtime files copied in by `npm run vendor:gsap`.
+    "public/vendor/**",
   ]),
 ]);
 
