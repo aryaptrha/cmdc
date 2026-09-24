@@ -1,6 +1,11 @@
 import type { CSSProperties } from "react";
 
-export type PlateTone = "paper" | "ultramarine" | "ink";
+export type PlateTone =
+  | "paper"
+  | "ultramarine"
+  | "ink"
+  | "ochre"
+  | "carmine";
 export type PlateVariant = "collage" | "frame" | "columns" | "pair";
 
 type Shape = {

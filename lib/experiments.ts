@@ -1,5 +1,8 @@
 export type ExperimentIdentity = "be-my-hands" | "aliza";
 
+/** Local accent and plate treatment, per DESIGN.md §02 (experiment palettes). */
+export type ExperimentAccent = "ochre" | "carmine";
+
 export type MetadataPair = {
   label: string;
   value: string;
@@ -12,6 +15,8 @@ export type Experiment = {
   title: string;
   premise: string;
   identity: ExperimentIdentity;
+  accent: ExperimentAccent;
+  accentPlate: "collage" | "columns";
   href: string;
   hoodHref: string;
   runtimeHref: string;
@@ -30,6 +35,8 @@ export const experiments: Experiment[] = [
     premise:
       "A machine selects and composes fragments of 16mm film. A person cuts, places and glues them by hand. Neither half can see what the other is doing.",
     identity: "be-my-hands",
+    accent: "ochre",
+    accentPlate: "collage",
     href: "/be-my-hands",
     hoodHref: "/be-my-hands/hood",
     runtimeHref: "/experiences/be-my-hands/index.html",
@@ -52,6 +59,8 @@ export const experiments: Experiment[] = [
     premise:
       "A recorded conversation experiment built on the 1966 ELIZA script, annotated so the mechanism stays visible instead of disappearing behind the reply.",
     identity: "aliza",
+    accent: "carmine",
+    accentPlate: "columns",
     href: "/aliza",
     hoodHref: "/aliza/hood",
     runtimeHref: "/experiences/aliza/index.html",

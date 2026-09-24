@@ -60,11 +60,16 @@ export default function BeMyHandsPage() {
     <>
       <div className="container">
         <Masthead variant="experiment" />
-        <ExperimentHeader
-          experiment={experiment}
-          eyebrow="A machine selects and places. A person cuts and glues. Neither sees the other's work, and every instruction is recorded."
-        />
       </div>
+
+      <section className="band band--accent">
+        <div className="container">
+          <ExperimentHeader
+            experiment={experiment}
+            eyebrow="A machine selects and places. A person cuts and glues. Neither sees the other's work, and every instruction is recorded."
+          />
+        </div>
+      </section>
 
       <section className="container section--tight">
         <Reveal>
@@ -140,7 +145,7 @@ export default function BeMyHandsPage() {
                 description="Photographic feedback captured immediately after gluing. Used to close the loop between instruction and result."
                 source="Captured 40 minutes after session 9. Date: 2024."
                 variant="columns"
-                tone="paper"
+                tone="ochre"
                 ratio="4 / 3"
                 label="Feedback"
                 mark="S-09"

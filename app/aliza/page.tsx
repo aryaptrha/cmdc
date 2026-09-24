@@ -39,11 +39,16 @@ export default function AlizaPage() {
     <>
       <div className="container">
         <Masthead variant="experiment" />
-        <ExperimentHeader
-          experiment={experiment}
-          eyebrow="A recorded conversation experiment built on the 1966 script, kept open so you can watch the mechanism work instead of the illusion."
-        />
       </div>
+
+      <section className="band band--accent">
+        <div className="container">
+          <ExperimentHeader
+            experiment={experiment}
+            eyebrow="A recorded conversation experiment built on the 1966 script, kept open so you can watch the mechanism work instead of the illusion."
+          />
+        </div>
+      </section>
 
       <section className="container section--tight">
         <Reveal>

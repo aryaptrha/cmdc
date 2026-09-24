@@ -1,5 +1,6 @@
 import type { Experiment } from "@/lib/experiments";
 import { MetadataStrip } from "./metadata-strip";
+import { Plate } from "./plate";
 import { Reveal } from "./reveal";
 import { TextCta } from "./text-cta";
 
@@ -11,6 +12,14 @@ export function ExperimentRow({ experiment }: ExperimentRowProps) {
   return (
     <Reveal as="article" className="experiment-row split">
       <div className="experiment-row__meta-col">
+        <Plate
+          className="experiment-row__plate"
+          variant={experiment.accentPlate}
+          tone={experiment.accent}
+          ratio="4 / 3"
+          label={experiment.title}
+          mark={experiment.number}
+        />
         <p className="experiment-row__index">
           {experiment.number} / {experiment.category}
         </p>

@@ -12,6 +12,33 @@
   --text-muted: #666666;
   --hairline: rgba(17, 17, 17, 0.16);
 
+  /* Derived scales. DESIGN.md documents two colours — ultramarine and paper —
+     and shows duotone treatment for imagery. These are tints and shades of
+     those two, plus the warm tone the generated plates already used, so the
+     palette can carry a page without inventing a foreign hue. */
+  --ultramarine-deep: #1c1ca8;
+  --ultramarine-soft: #8f8fe6;
+  --ultramarine-pale: #e4e4f9;
+
+  --paper-light: #f8f4ec;
+  --paper-dim: #e6dfd1;
+  --paper-deep: #ddd1b8;
+
+  /* Material tone — aged film, glue, cutting mat. */
+  --ochre: #c2913c;
+  --ochre-deep: #7f531a;
+  --ochre-pale: #efe1c2;
+
+  /* Annotation tone — red pencil on a research document. */
+  --carmine: #a5153f;
+  --carmine-pale: #f3dde3;
+
+  /* One accent knob for the whole system. The shell is ultramarine; an
+     experiment overrides it (DESIGN.md §12 --experiment-accent), so the shared
+     identity recedes once a visitor is inside the work. */
+  --accent: var(--brand-ultramarine);
+  --accent-surface: var(--ultramarine-pale);
+
   --font-sans: Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
@@ -46,6 +73,9 @@
   --color-ink: var(--text-ink);
   --color-muted: var(--text-muted);
   --color-hairline: var(--hairline);
+  --color-ultramarine-pale: var(--ultramarine-pale);
+  --color-ochre: var(--ochre);
+  --color-carmine: var(--carmine);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 }
@@ -83,7 +113,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand-ultramarine);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -223,7 +253,7 @@ html.lenis body {
 }
 
 .accent {
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 /* ------------------------------------------------------------------
@@ -250,7 +280,7 @@ html.lenis body {
 
 .masthead__link:hover,
 .masthead__link:focus-visible {
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 /* ------------------------------------------------------------------
@@ -267,7 +297,7 @@ html.lenis body {
 }
 
 .section-index__number {
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 .section-index__label {
@@ -301,7 +331,7 @@ html.lenis body {
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 .experiment-row__title {
@@ -366,8 +396,8 @@ html.lenis body {
 
 .text-cta:hover,
 .text-cta:focus-visible {
-  color: var(--brand-ultramarine);
-  border-color: var(--brand-ultramarine);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .text-cta__arrow {
@@ -395,7 +425,7 @@ html.lenis body {
 .figure__plate {
   position: relative;
   aspect-ratio: 16 / 9;
-  background-color: #e6dfd1;
+  background-color: var(--paper-dim);
   overflow: hidden;
 }
 
@@ -458,7 +488,8 @@ html.lenis body {
 .experiment {
   --experiment-bg: var(--surface-paper);
   --experiment-fg: var(--text-ink);
-  --experiment-accent: var(--brand-ultramarine);
+  --accent: var(--brand-ultramarine);
+  --accent-surface: var(--ultramarine-pale);
 
   --experiment-display-font: var(--font-sans);
   --experiment-body-font: var(--font-sans);
@@ -481,17 +512,32 @@ html.lenis body {
   font-family: var(--experiment-display-font);
 }
 
-/* Be My Hands — documentary, physical, measurable. */
+/* Be My Hands — documentary, physical, measurable. A warm material accent,
+   taken from film stock, glue and the cutting mat, replaces the shared
+   ultramarine inside the experiment (DESIGN.md §02, §12). */
 .experiment--be-my-hands {
-  --experiment-accent: var(--brand-ultramarine);
+  --accent: var(--ochre-deep);
+  --accent-surface: var(--ochre-pale);
+  --accent-field: var(--ochre);
+  --accent-field-ink: var(--text-ink);
+  --accent-field-muted: rgba(17, 17, 17, 0.78);
+  --accent-field-line: rgba(17, 17, 17, 0.3);
 }
 
-/* ALIZA — local identity overrides the global tokens. */
+/* ALIZA — local identity overrides the global tokens. The accent is a red
+   annotation pencil: the colour of notes written over a transcript. */
 .experiment--aliza {
   --experiment-display-font: var(--font-mono-aliza);
   --experiment-body-font: var(--font-serif-aliza);
   --experiment-mono-font: var(--font-mono-aliza);
   --experiment-bg: var(--surface-paper);
+
+  --accent: var(--carmine);
+  --accent-surface: var(--carmine-pale);
+  --accent-field: var(--carmine);
+  --accent-field-ink: var(--surface-paper);
+  --accent-field-muted: rgba(242, 237, 226, 0.85);
+  --accent-field-line: rgba(242, 237, 226, 0.4);
 }
 
 .experiment--aliza .metadata,
@@ -525,12 +571,13 @@ html.lenis body {
    12. Boundary notice — crossing from portfolio into experiment
 ------------------------------------------------------------------- */
 .boundary {
-  border: 1px solid var(--brand-ultramarine);
+  background: var(--accent-surface);
+  border-left: 4px solid var(--accent);
   padding: var(--space-3) var(--space-4);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.04em;
-  color: var(--brand-ultramarine);
+  color: var(--text-ink);
 }
 
 /* ------------------------------------------------------------------
@@ -555,7 +602,7 @@ html.lenis body {
 }
 
 .record__row--machine .record__speaker {
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 .chain {
@@ -573,7 +620,7 @@ html.lenis body {
 }
 
 .chain__step--active {
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 /* ------------------------------------------------------------------
@@ -587,7 +634,7 @@ html.lenis body {
 .note__index {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--brand-ultramarine);
+  color: var(--accent);
   letter-spacing: 0.08em;
 }
 
@@ -620,6 +667,24 @@ html.lenis body {
 
 .stack--8 {
   gap: var(--space-8);
+}
+
+/* Full-bleed editorial band. The shell band is ultramarine; each experiment
+   overrides --accent-field so the band carries that experiment's own colour
+   (DESIGN.md §02, §07). Inverting the text tokens inside the band lets every
+   child keep its existing styles and simply change colour. */
+.band--accent {
+  background: var(--accent-field, var(--brand-ultramarine));
+  color: var(--accent-field-ink, var(--surface-paper));
+  --text-ink: var(--accent-field-ink, var(--surface-paper));
+  --text-muted: var(--accent-field-muted, rgba(242, 237, 226, 0.72));
+  --hairline: var(--accent-field-line, rgba(242, 237, 226, 0.28));
+  --accent: var(--accent-field-ink, var(--surface-paper));
+  --accent-surface: var(--accent-field-line, rgba(242, 237, 226, 0.28));
+}
+
+.experiment-row__plate {
+  max-width: 320px;
 }
 
 .colophon {
@@ -667,7 +732,7 @@ html.lenis body {
 }
 
 .plate--paper {
-  background-color: #e6dfd1;
+  background-color: var(--paper-dim);
   color: rgba(17, 17, 17, 0.42);
 }
 
@@ -679,6 +744,16 @@ html.lenis body {
 .plate--ink {
   background-color: var(--text-ink);
   color: rgba(242, 237, 226, 0.4);
+}
+
+.plate--ochre {
+  background-color: var(--ochre);
+  color: rgba(17, 17, 17, 0.45);
+}
+
+.plate--carmine {
+  background-color: var(--carmine);
+  color: rgba(242, 237, 226, 0.5);
 }
 
 .plate__grid {
@@ -751,7 +826,7 @@ html.lenis body {
 }
 
 .log__status {
-  color: var(--brand-ultramarine);
+  color: var(--accent);
 }
 
 @media (max-width: 760px) {
@@ -762,7 +837,135 @@ html.lenis body {
 }
 
 /* ------------------------------------------------------------------
-   15. Motion guards
+   15. Opening sequence — minimalist page curtain
+   Paper panel over an ultramarine veil, roughly 4s, then it lifts away.
+   Initial states below are what the visitor sees before GSAP takes over,
+   so the sequence never flashes an un-animated frame.
+------------------------------------------------------------------- */
+.opening,
+.opening__veil {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  will-change: transform;
+}
+
+.opening__veil {
+  z-index: 99;
+  background: var(--brand-ultramarine);
+}
+
+.opening {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-6);
+  padding-block: var(--space-6);
+  background: var(--surface-paper);
+  overflow: hidden;
+}
+
+.opening__top,
+.opening__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.opening__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.opening__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.opening__rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--brand-ultramarine);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.opening__center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.opening__statement {
+  font-weight: var(--display-weight);
+  font-size: clamp(30px, 5.4vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+.opening__line {
+  display: block;
+  overflow: hidden;
+}
+
+.opening__line-inner {
+  display: block;
+  transform: translateY(115%);
+  will-change: transform;
+}
+
+.opening__sub {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 46ch;
+  opacity: 0;
+}
+
+.opening [data-opening="meta"] {
+  opacity: 0;
+}
+
+.opening__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--hairline);
+}
+
+.opening__progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--brand-ultramarine);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* No JS means the timeline never runs — hide the overlay rather than trap the
+   visitor behind a curtain that cannot lift. */
+html:not(.js) .opening,
+html:not(.js) .opening__veil {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening,
+  .opening__veil {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   16. Motion guards
    Reduced motion renders final state immediately, no scroll dependency.
 ------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

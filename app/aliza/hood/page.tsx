@@ -57,16 +57,21 @@ export default function AlizaHoodPage() {
     <>
       <div className="container">
         <Masthead variant="experiment" />
-        <header className="experiment-header">
-          <p className="eyebrow">Look under the hood / {experiment.number}</p>
-          <SplitDisplay as="h1" className="display" text="ALIZA" />
-          <p className="subhead reading">
-            How the matcher works, what it structurally cannot do, and which
-            parts were left unresolved on purpose.
-          </p>
-          <MetadataStrip pairs={credits} />
-        </header>
       </div>
+
+      <section className="band band--accent">
+        <div className="container">
+          <header className="experiment-header">
+            <p className="eyebrow">Look under the hood / {experiment.number}</p>
+            <SplitDisplay as="h1" className="display" text="ALIZA" />
+            <p className="subhead reading">
+              How the matcher works, what it structurally cannot do, and which
+              parts were left unresolved on purpose.
+            </p>
+            <MetadataStrip pairs={credits} />
+          </header>
+        </div>
+      </section>
 
       <section className="container section">
         <div className="split">
@@ -140,7 +145,7 @@ export default function AlizaHoodPage() {
               description="Keyword ranking for the sentence “He says I'm depressed much of the time.” Two keywords matched; 'depressed' outranked 'I'm' and selected the transformation used in the recorded reply."
               source="Method: rank-weighted match table, 41 keywords. Date: 2024."
               variant="columns"
-              tone="paper"
+              tone="carmine"
               ratio="16 / 6"
               label="Match table"
               mark="R-014"

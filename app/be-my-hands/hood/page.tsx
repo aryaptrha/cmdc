@@ -49,16 +49,21 @@ export default function BeMyHandsHoodPage() {
     <>
       <div className="container">
         <Masthead variant="experiment" />
-        <header className="experiment-header">
-          <p className="eyebrow">Look under the hood / {experiment.number}</p>
-          <SplitDisplay as="h1" className="display" text="Be My Hands" />
-          <p className="subhead reading">
-            How the selection works, how instructions reached the hands, and
-            what the twenty-two failures revealed.
-          </p>
-          <MetadataStrip pairs={credits} />
-        </header>
       </div>
+
+      <section className="band band--accent">
+        <div className="container">
+          <header className="experiment-header">
+            <p className="eyebrow">Look under the hood / {experiment.number}</p>
+            <SplitDisplay as="h1" className="display" text="Be My Hands" />
+            <p className="subhead reading">
+              How the selection works, how instructions reached the hands, and
+              what the twenty-two failures revealed.
+            </p>
+            <MetadataStrip pairs={credits} />
+          </header>
+        </div>
+      </section>
 
       <section className="container section">
         <div className="split">
@@ -112,7 +117,7 @@ export default function BeMyHandsHoodPage() {
               description="A printed instruction as it reached the operator. The position is given in millimetres from the sheet origin; no source frame is shown."
               source="Method: instruction printout, session 9. Date: 2024."
               variant="columns"
-              tone="paper"
+              tone="ochre"
               ratio="16 / 6"
               label="Instruction"
               mark="F-048"

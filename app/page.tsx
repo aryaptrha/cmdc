@@ -1,14 +1,18 @@
 import { ExperimentRow } from "./_components/experiment-row";
 import { Masthead } from "./_components/masthead";
 import { MetadataStrip } from "./_components/metadata-strip";
+import { Opening } from "./_components/opening";
 import { Reveal } from "./_components/reveal";
 import { SectionIndex } from "./_components/section-index";
 import { SplitDisplay } from "./_components/split-display";
 import { colophon, experiments } from "@/lib/experiments";
+import { opening } from "@/lib/opening";
 
 export default function Home() {
   return (
     <>
+      <Opening />
+
       <div className="container">
         <Masthead />
       </div>
@@ -20,8 +24,9 @@ export default function Home() {
               as="h1"
               className="display"
               text={"The portfolio is the catalogue.\nEach experiment is its own artwork."}
+              delay={opening.contentDelay}
             />
-            <Reveal immediate delay={0.35}>
+            <Reveal immediate delay={opening.contentDelay + 0.35}>
               <p className="prose">
                 Two experiments made with machines. Neither is fully automated
                 and neither is fully handmade — the part worth looking at is
@@ -81,37 +86,39 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="container section" id="about">
-          <div className="stack stack--8">
-            <div className="split">
-              <div>
-                <SectionIndex number="03" label="About" />
+        <section className="band band--accent" id="about">
+          <div className="container section">
+            <div className="stack stack--8">
+              <div className="split">
+                <div>
+                  <SectionIndex number="03" label="About" />
+                </div>
+                <Reveal className="prose">
+                  <p>
+                    The Robot and Me is a record of work made with machines — not
+                    generated wholesale, and not untouched by hand. The interesting
+                    part is always the seam: what the machine decided, what the
+                    person did about it, and what neither of them expected.
+                  </p>
+                  <p>
+                    Two experiments are published here. Both are desktop
+                    experiences, both keep their own design language, and neither
+                    is a demonstration of a technology.
+                  </p>
+                  <p>
+                    This build is itself a demonstration. The exhibits, the
+                    recorded conversations and the process data are written to
+                    exercise the design system, and no real recordings are
+                    reproduced.
+                  </p>
+                </Reveal>
               </div>
-              <Reveal className="prose">
-                <p>
-                  The Robot and Me is a record of work made with machines — not
-                  generated wholesale, and not untouched by hand. The interesting
-                  part is always the seam: what the machine decided, what the
-                  person did about it, and what neither of them expected.
-                </p>
-                <p>
-                  Two experiments are published here. Both are desktop
-                  experiences, both keep their own design language, and neither
-                  is a demonstration of a technology.
-                </p>
-                <p>
-                  This build is itself a demonstration. The exhibits, the
-                  recorded conversations and the process data are written to
-                  exercise the design system, and no real recordings are
-                  reproduced.
-                </p>
+
+              <Reveal className="colophon">
+                <p className="eyebrow">Colophon</p>
+                <MetadataStrip pairs={colophon} />
               </Reveal>
             </div>
-
-            <Reveal className="colophon">
-              <p className="eyebrow">Colophon</p>
-              <MetadataStrip pairs={colophon} />
-            </Reveal>
           </div>
         </section>
       </main>
